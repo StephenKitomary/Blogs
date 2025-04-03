@@ -1,0 +1,11 @@
+{
+  "pages": {},
+  "app": {
+    "[project]/src/app/@modal/(.)blog/[slug]/page": [
+      "static/media/ieVl2ZhZI2eCN5jzbjEETS9weq8_1927DQk6YvNkeg-s.p.caa4f8d0.woff2",
+      "static/media/tDbV2o_flEEny0FZhsfKu5WU4xD0OwGtT0rU3BE-s.p.226a948a.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pagesUsingSizeAdjust": false
+}
