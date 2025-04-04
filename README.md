@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# chanhdai.com
 
-## Getting Started
+chanhdai.com is my portfolio website, showcasing my work and experience as a Software Developer & UI/UX Designer. It is built with [Next.js](https://nextjs.org), [Tailwind CSS](https://tailwindcss.com), and [shadcn/ui](https://ui.shadcn.com) to deliver a modern, fast, and seamless user experience.
 
-First, run the development server:
+This is a continuously evolving side project where I experiment with new technologies and keep it updated with the latest advancements in web development.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Check out the live site: [chanhdai.com](https://chanhdai.com)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./public/screenshot-wide-dark.webp">
+  <img src="./public/screenshot-wide-light.webp" alt="Screenshot">
+</picture>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Core Features & Technologies
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Elegant & Minimalistic UI**: Clean and modern design
+- **Dark Mode**: Supports light and dark themes for a better user experience
+- **vCard Integration**: Digital business card with contact details
+- **SEO Optimization**: [JSON-LD schema](https://json-ld.org), sitemap, robots
+- **Email Protection**: Obfuscation to prevent spam
+- Installable PWA
+- [Next.js 15](https://nextjs.org/): Latest React framework for optimized performance and scalability
+- [Tailwind CSS v4](https://tailwindcss.com): Modern utility-first CSS framework for styling
 
-## Learn More
+### Blog Features
 
-To learn more about Next.js, take a look at the following resources:
+- MDX & Markdown support
+- Syntax Highlighting for better readability
+- RSS Feed for easy content distribution
+- Dynamic OG Images for rich previews
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Compatibility
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Browser support
 
-## Deploy on Vercel
+Tailwind CSS v4.0 is designed for and tested on modern browsers, and the core functionality of the framework specifically depends on these browser versions:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Chrome 111** (released March 2023)
+- **Safari 16.4** (released March 2023)
+- **Firefox 128** (released July 2024)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> Reference: [https://tailwindcss.com/docs/compatibility#browser-support](https://tailwindcss.com/docs/compatibility#browser-support)
+
+## Development
+
+Please refer to the [Development Guide](./DEVELOPMENT.md) for more details.
+
+## License
+
+Licensed under the [MIT license](./LICENSE).
+
+> You're free to use my code! Just make sure to remove all my personal information before publishing your website. It's awesome to see my code being useful to someone!
+
+## Acknowledgments
+
+- [React](https://react.dev)
+- [Next.js](https://nextjs.org)
+- [Tailwind CSS](https://tailwindcss.com)
+- [Radix UI](https://www.radix-ui.com)
+- [Motion](https://motion.dev)
+- [shadcn/ui](https://ui.shadcn.com)
+- [Aceternity UI](https://ui.aceternity.com)
+- [Lucide](https://lucide.dev)
+- And many other open-source libraries used in `package.json`
