@@ -1,23 +1,17 @@
-import Link from "next/link";
-
 import dayjs from "dayjs";
-import { ChevronLeftIcon } from "lucide-react";
-import { Metadata } from "next";
-
-import { PostItem } from "@/components/post-item";
-import { Button } from "@/components/ui/button";
-import { getAllPosts } from "@/data/blog";
+import Link from "next/link";
 
 import { ChanhDaiWordmark } from "@/components/chanhdai-wordmark";
 import { Footer } from "@/components/footer";
-import { NavItemGitHub } from "@/components/nav-item-github";
+import { InstagramNav } from "@/components/nav-item-instagram";
 import { NavItemRSS } from "@/components/nav-item-rss";
+import { PostItem } from "@/components/post-item";
 import { ScrollTop } from "@/components/scroll-top";
 import { ToggleTheme } from "@/components/toggle-theme";
+import { getAllPosts } from "@/data/blog";
 import { cn } from "@/lib/cn";
-import { InstagramNav } from "@/components/nav-item-instagram";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: {children: React.ReactNode }) {
   // Fetch all posts using the imported function
   const allPosts = getAllPosts();
   
@@ -68,6 +62,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     />
                   ))}
               </div>
+              {children}
             </div>
           </div>
           <Footer />

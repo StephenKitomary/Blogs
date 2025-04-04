@@ -2,12 +2,10 @@ import Link from "next/link";
 
 import { ChanhDaiWordmark } from "@/components/chanhdai-wordmark";
 import { Footer } from "@/components/footer";
-
-import { NavItemRSS } from "@/components/nav-item-rss";
 import { InstagramNav } from "@/components/nav-item-instagram";
+import { NavItemRSS } from "@/components/nav-item-rss";
 import { ScrollTop } from "@/components/scroll-top";
 import { ToggleTheme } from "@/components/toggle-theme";
-
 import { cn } from "@/lib/cn";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
