@@ -2,8 +2,9 @@ import Link from "next/link";
 
 import { ChanhDaiWordmark } from "@/components/chanhdai-wordmark";
 import { Footer } from "@/components/footer";
-import { NavItemGitHub } from "@/components/nav-item-github";
+
 import { NavItemRSS } from "@/components/nav-item-rss";
+import { InstagramNav } from "@/components/nav-item-instagram";
 import { ScrollTop } from "@/components/scroll-top";
 import { ToggleTheme } from "@/components/toggle-theme";
 
@@ -27,7 +28,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
               <div className="flex translate-x-px items-center gap-2 rounded-bl-2xl bg-background ring ring-grid ring-inset">
                 <NavItemRSS />
-                <NavItemGitHub />
+                <InstagramNav />
                 <ToggleTheme />
               </div>
             </div>

@@ -15,6 +15,7 @@ import { NavItemRSS } from "@/components/nav-item-rss";
 import { ScrollTop } from "@/components/scroll-top";
 import { ToggleTheme } from "@/components/toggle-theme";
 import { cn } from "@/lib/cn";
+import { InstagramNav } from "@/components/nav-item-instagram";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   // Fetch all posts using the imported function
@@ -37,7 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
               <div className="flex translate-x-px items-center gap-2 rounded-bl-2xl bg-background ring ring-grid ring-inset">
                 <NavItemRSS />
-                <NavItemGitHub />
+                <InstagramNav />
                 <ToggleTheme />
               </div>
             </div>
