@@ -24,9 +24,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }): Promise<Metadata> {
-  const slug = (await params).slug;
+  const { slug } = params;
   const post = getAllPosts().find((post) => post.slug === slug);
 
   if (!post) {
@@ -41,10 +41,10 @@ export async function generateMetadata({
     title,
     description,
     alternates: {
-      canonical: `/blog/${post.slug}`,
+      canonical: `/${post.slug}`,
     },
     openGraph: {
-      url: `/blog/${post.slug}`,
+      url: `/${post.slug}`,
       type: "article",
       publishedTime: dayjs(createdAt).toISOString(),
       modifiedTime: dayjs(updatedAt).toISOString(),
@@ -70,8 +70,8 @@ function getPageJsonLd(post: Post): WithContext<PageSchema> {
     description: post.metadata.description,
     image:
       post.metadata.image ||
-      `/og/simple?title=${encodeURIComponent(post.metadata.title)}`,
-    url: `${SITE_INFO.url}/blog/${post.slug}`,
+      `${SITE_INFO.url}/og/simple?title=${encodeURIComponent(post.metadata.title)}`,
+    url: `${SITE_INFO.url}/${post.slug}`,
     datePublished: dayjs(post.metadata.createdAt).toISOString(),
     dateModified: dayjs(post.metadata.updatedAt).toISOString(),
     author: {
@@ -83,14 +83,12 @@ function getPageJsonLd(post: Post): WithContext<PageSchema> {
   };
 }
 
-export default async function Page({
+export default function Page({
   params,
 }: {
-  params: Promise<{
-    slug: string;
-  }>;
+  params: { slug: string };
 }) {
-  const slug = (await params).slug;
+  const { slug } = params;
   const post = getAllPosts().find((post) => post.slug === slug);
 
   if (!post) {
@@ -108,9 +106,9 @@ export default async function Page({
 
       <div className="screen-line-after flex pb-4">
         <Button variant="link" className="px-2 text-base" asChild>
-          <Link href="/blog">
+          <Link href="/">
             <ChevronLeftIcon className="size-5" />
-            Blog
+            Home
           </Link>
         </Button>
       </div>

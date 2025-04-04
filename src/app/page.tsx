@@ -1,61 +1,79 @@
+import Link from "next/link";
+
 import dayjs from "dayjs";
-import { WithContext, WebPage } from "schema-dts";
+import { ChevronLeftIcon } from "lucide-react";
+import { Metadata } from "next";
+
+import { PostItem } from "@/components/post-item";
+import { Button } from "@/components/ui/button";
+import { getAllPosts } from "@/data/blog";
+
+import { ChanhDaiWordmark } from "@/components/chanhdai-wordmark";
 import { Footer } from "@/components/footer";
+import { NavItemGitHub } from "@/components/nav-item-github";
+import { NavItemRSS } from "@/components/nav-item-rss";
 import { ScrollTop } from "@/components/scroll-top";
-import { SITE_INFO } from "@/config/site";
-import { USER } from "@/data/user";
-import { Blog } from "@/features/profile/components/blog";
-import { Header } from "@/features/profile/components/header";
+import { ToggleTheme } from "@/components/toggle-theme";
 import { cn } from "@/lib/cn";
 
-// Updated schema for a blog page instead of profile page
-function getPageJsonLd(): WithContext<WebPage> {
-  return {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    name: `${USER.displayName}'s Blog`,
-    dateModified: dayjs().toISOString(),
-    author: {
-      "@type": "Person",
-      name: USER.displayName,
-      identifier: USER.username,
-      image: SITE_INFO.url + USER.avatar,
-    },
-  };
-}
-
-function Pattern() {
-  return (
-    <div
-      className={cn(
-        "relative flex h-4 w-full border-x border-grid",
-        "before:absolute before:-left-[100vw] before:h-4 before:w-[200vw]",
-        "before:bg-[image:repeating-linear-gradient(315deg,_var(--pattern-foreground)_0,_var(--pattern-foreground)_1px,_transparent_0,_transparent_50%)] before:bg-[size:10px_10px] before:[--pattern-foreground:var(--color-black)]/5 dark:before:[--pattern-foreground:var(--color-white)]/5"
-      )}
-    />
-  );
-}
-
-export default function Page() {
-  const websiteJsonLd = getPageJsonLd();
+export default function Layout({ children }: { children: React.ReactNode }) {
+  // Fetch all posts using the imported function
+  const allPosts = getAllPosts();
+  
   return (
     <>
-      <script
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-        type="application/ld+json"
-      />
       <div className="max-w-screen overflow-x-hidden">
         <div className="mx-auto px-4 md:max-w-3xl">
-          
-           <main>
-            <Header />
-            <Blog />
-            <Pattern />
-          </main>
+          <div className="relative mt-2 min-h-[calc(100vh-0.5rem)] border-x border-grid">
+            <div
+              className={cn(
+                "screen-line-before screen-line-after flex items-start justify-between",
+                "bg-zinc-950/0.75 bg-[image:radial-gradient(var(--pattern-foreground)_1px,_transparent_0)] bg-[size:8px_8px] [--pattern-foreground:var(--color-zinc-950)]/5 sm:bg-[size:10px_10px] dark:bg-white/0.75 dark:[--pattern-foreground:var(--color-white)]/5"
+              )}
+            >
+              <Link href="/" className="-translate-x-px">
+                <ChanhDaiWordmark className="h-16" />
+              </Link>
+
+              <div className="flex translate-x-px items-center gap-2 rounded-bl-2xl bg-background ring ring-grid ring-inset">
+                <NavItemRSS />
+                <NavItemGitHub />
+                <ToggleTheme />
+              </div>
+            </div>
+            <div className="relative pt-4">
+              <div className="absolute inset-0 -z-1 grid grid-cols-1 gap-4 max-sm:hidden sm:grid-cols-2">
+                <div className="border-r border-grid"></div>
+                <div className="border-l border-grid"></div>
+              </div>
+        
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {allPosts
+                  .slice()
+                  .sort((a, b) => {
+                    const dateA = dayjs(a.metadata.createdAt);
+                    const dateB = dayjs(b.metadata.createdAt);
+                    // Ensure both dates are valid before comparing
+                    if (dateA.isValid() && dateB.isValid()) {
+                      return dateB.diff(dateA);
+                    }
+                    return 0;
+                  })
+                  .map((post, index) => (
+                    <PostItem
+                      key={post.slug}
+                      post={post}
+                      shouldPreloadImage={index <= 4}
+                    />
+                  ))}
+              </div>
+            </div>
+          </div>
           <Footer />
         </div>
       </div>
-      <ScrollTop className="bottom-[calc(4rem+env(safe-area-inset-bottom,0px))] lg:bottom-[calc(5.5rem+env(safe-area-inset-bottom,0px))]" />
+
+      <ScrollTop />
     </>
   );
 }

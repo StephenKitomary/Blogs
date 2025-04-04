@@ -6,6 +6,7 @@ import { NavItemGitHub } from "@/components/nav-item-github";
 import { NavItemRSS } from "@/components/nav-item-rss";
 import { ScrollTop } from "@/components/scroll-top";
 import { ToggleTheme } from "@/components/toggle-theme";
+
 import { cn } from "@/lib/cn";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -42,6 +43,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             {children}
           </div>
+
 
           <Footer />
         </div>

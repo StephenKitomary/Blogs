@@ -1,3 +1,8 @@
 {
+  "/(app)/[slug]/page": "app/(app)/[slug]/page.js",
+  "/(app)/blog/[slug]/page": "app/(app)/blog/[slug]/page.js",
+  "/(app)/blog/page": "app/(app)/blog/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/manifest.webmanifest/route": "app/manifest.webmanifest/route.js",
   "/page": "app/page.js"
 }
