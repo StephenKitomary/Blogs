@@ -1,1 +1,20 @@
-{}
+{
+  "..\\node_modules\\.pnpm\\next@15.2.4_@babel+core@7.2_16ce3abb760b473ba98db4731cd0a223\\node_modules\\next\\dist\\client\\index.js -> ../pages/_app": {
+    "id": 2324,
+    "files": [
+      "static/chunks/324.af65c5d1450aeab3.js"
+    ]
+  },
+  "..\\node_modules\\.pnpm\\next@15.2.4_@babel+core@7.2_16ce3abb760b473ba98db4731cd0a223\\node_modules\\next\\dist\\client\\index.js -> ../pages/_error": {
+    "id": 5337,
+    "files": [
+      "static/chunks/718.e8bcd75f092f3258.js"
+    ]
+  },
+  "__registry__\\index.tsx -> @/registry/examples/apple-hello-effect-demo.tsx": {
+    "id": 1099,
+    "files": [
+      "static/chunks/99.f94484f26dbbd2a7.js"
+    ]
+  }
+}

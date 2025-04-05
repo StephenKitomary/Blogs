@@ -13,9 +13,13 @@ import { getAllPosts } from "@/data/blog";
 import { USER } from "@/data/user";
 import { Post } from "@/types/blog";
 
+type PageProps = {
+  params: { slug: string }
+  searchParams?: { [key: string]: string | string[] | undefined }
+}
+
 export async function generateStaticParams() {
   const posts = getAllPosts();
-
   return posts.map((post) => ({
     slug: post.slug,
   }));
@@ -23,9 +27,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
   params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+}: PageProps): Promise<Metadata> {
   const { slug } = params;
   const post = getAllPosts().find((post) => post.slug === slug);
 
@@ -34,7 +36,6 @@ export async function generateMetadata({
   }
 
   const { title, description, image, createdAt, updatedAt } = post.metadata;
-
   const ogImage = image || `/og/simple?title=${encodeURIComponent(title)}`;
 
   return {
@@ -83,12 +84,8 @@ function getPageJsonLd(post: Post): WithContext<PageSchema> {
   };
 }
 
-export default function Page({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const { slug } = params;
+export default async function Page(props: PageProps) {
+  const { slug } = props.params;
   const post = getAllPosts().find((post) => post.slug === slug);
 
   if (!post) {
