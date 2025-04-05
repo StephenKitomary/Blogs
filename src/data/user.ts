@@ -1,7 +1,7 @@
 export const USER = {
   firstName: "Chánh Đại",
   lastName: "Nguyễn",
-  displayName: "Chánh Đại",
+  displayName: "Notes by",
   username: "ncdai",
   gender: "male",
   bio: "Creating with code, driven by passion.",
@@ -27,7 +27,7 @@ export const USER = {
     "https://chanhdai.id.vn",
   ],
   dateOfBirth: "2000-08-14", // YYYY-MM-DD
-  jobTitle: "Software Developer & UI/UX Designer",
+  jobTitle: " teKsafari",
   jobs: [
     {
       title: "Senior Frontend Developer & UI Design Lead",

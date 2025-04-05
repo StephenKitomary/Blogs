@@ -1,7 +1,8 @@
 import { USER } from "@/data/user";
 
 export const SITE_INFO = {
-  name: USER.displayName,
+  name: "Notes by teKsafari",
+  title: "Notes by teKsafari",
   url: process.env.APP_URL || "https://chanhdai.com",
   ogImage: USER.ogImage,
   description: USER.bio,
