@@ -4,7 +4,7 @@ export const USER = {
   displayName: "Notes by",
   username: "ncdai",
   gender: "male",
-  bio: "Creating with code, driven by passion.",
+  bio: "Life is all about sharing. If we are good at something, pass it on. - Mary Berry",
   flipSentences: [
     "Software Developer",
     "UI/UX Designer",
@@ -14,7 +14,7 @@ export const USER = {
   phoneNumber: "Kzg0Nzc3ODg4MTQ4", // E.164 format, base64 encoded (https://t.io.vn/base64-string-converter)
   email: "ZGFpQGNoYW5oZGFpLmNvbQ==", // base64 encoded
   // email: "dai[at]chanhdai[dot]com",
-  website: "https://chanhdai.com",
+  website: "https://teksafari.org",
   otherWebsites: [
     "https://dai.ng",
     "https://dai.so",
@@ -47,7 +47,7 @@ One of my key projects, [ZaDark](https://zadark.com), enhances the Zalo experien
 Let's connect and collaborate!
   `,
   avatar: "/images/chanhdai-avatar-ghibli.jpeg",
-  ogImage: "/images/chanhdai-og-image.png",
+  ogImage: "/images/Notes-min.png",
   keywords:
     "ncdai, nguyenchanhdai, nguyen chanh dai, chanhdai, chanh dai, iamncdai, quaric, zadark, nguyễn chánh đại, chánh đại",
   dateCreated: "2023-10-20", // YYYY-MM-DD
