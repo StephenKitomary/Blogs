@@ -13,9 +13,10 @@ import { getAllPosts } from "@/data/blog";
 import { USER } from "@/data/user";
 import { Post } from "@/types/blog";
 
-type PageProps = {
-  params: { slug: string }
-  searchParams?: { [key: string]: string | string[] | undefined }
+// Define the exact interface that Next.js 15 expects
+interface PageProps {
+  params?: Promise<{ slug: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export async function generateStaticParams() {
@@ -25,10 +26,12 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const { slug } = params;
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  if (!props.params) {
+    return {};
+  }
+  
+  const { slug } = await props.params;
   const post = getAllPosts().find((post) => post.slug === slug);
 
   if (!post) {
@@ -84,8 +87,13 @@ function getPageJsonLd(post: Post): WithContext<PageSchema> {
   };
 }
 
+// Match the exact signature that Next.js 15 is expecting
 export default async function Page(props: PageProps) {
-  const { slug } = props.params;
+  if (!props.params) {
+    notFound();
+  }
+  
+  const { slug } = await props.params;
   const post = getAllPosts().find((post) => post.slug === slug);
 
   if (!post) {

@@ -11,7 +11,7 @@ import { ToggleTheme } from "@/components/toggle-theme";
 import { getAllPosts } from "@/data/blog";
 import { cn } from "@/lib/cn";
 
-export default function Layout({ children }: {children: React.ReactNode }) {
+export default function Layout({ children }: {children: React.ReactNode}) {
   // Fetch all posts using the imported function
   const allPosts = getAllPosts();
   
