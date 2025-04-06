@@ -1,122 +1,104 @@
 ---
 title: Automatic Desk Lamp Withs Arduino
-description: This here is a very short description of the project
+description: Learn how to build a basic light-sensing LED circuit with Arduino
 image: /images/Light-min.png
 createdAt: 2025-03-02
 updatedAt: 2025-04-02
 ---
-## Components You'll Need
 
-- Arduino Uno or Nano
-- Light Dependent Resistor (LDR/photoresistor)
-- 10kΩ resistor
-- 5V LED strip or 5V lamp (that can connect directly to Arduino)
-- Jumper wires
-- Mini breadboard
-- Micro USB cable (for Arduino)
-- USB power supply (2A recommended)
-- 3D printer access (or use a 3D printing service)
 
-![Project Components](/images/blog/simple-lamp-components.webp)
+This project uses a very straightforward circuit:
 
-## The Circuit: Simplicity is Key
-
-This project uses a wonderfully simple circuit:
-
-![Arduino Desk Lamp Circuit Diagram](/images/blog/simple-lamp-circuit.webp)
+![Arduino Light Sensor Circuit](/images/arduino-light.jpg)
 
 ### Connections
 
 1. **LDR Circuit:**
    - Connect one leg of the LDR to Arduino 5V
    - Connect the other leg to:
-     - Arduino Analog Pin A0
+     - Arduino Analog Pin A2
      - One end of the 10kΩ resistor
    - Connect the other end of the 10kΩ resistor to GND
 
-2. **LED Lamp Connection:**
-   - Connect the positive (+) wire of your 5V lamp to Arduino Digital Pin 9 (PWM pin)
-   - Connect the negative (-) wire to Arduino GND
+2. **LED Connection:**
+   - Connect the LED's anode (longer leg) through a 220Ω resistor to Arduino Digital Pin 11
+   - Connect the LED's cathode (shorter leg) to GND
 
-That's it! No relay needed since we're using a low-voltage 5V lamp that Arduino can power directly.
+## The Code: Light-Responsive LED
 
-> **Note**: Make sure your lamp draws less than 40mA if connecting directly to an Arduino pin, or use a transistor for higher current loads. Many small 5V LED lamps or short LED strips can be powered directly.
-
-## The Code: Brightness Control
-
-Instead of simply turning the lamp on or off, our code will gradually adjust the brightness based on ambient light levels:
+Here's the simple code that reads the light sensor and controls the LED brightness:
 
 ```cpp
-// Simple Arduino Desk Lamp with Auto-Brightness
-// Uses an LDR sensor to control a 5V LED lamp
+// Simple Arduino Light Sensor with LED
+// Uses an LDR to control an LED brightness
 
 // Pin definitions
-const int LDR_PIN = A0;     // LDR connected to analog pin A0
-const int LAMP_PIN = 9;     // 5V lamp connected to PWM pin 9
+const int LDR_PIN = A2;     // LDR connected to analog pin A2
+const int LED_PIN = 11;     // LED connected to digital pin 11 (PWM)
 
 // Brightness control parameters
-const int MIN_BRIGHTNESS = 10;   // Minimum lamp brightness (0-255)
-const int MAX_BRIGHTNESS = 255;  // Maximum lamp brightness (0-255)
-const int AMBIENT_DARK = 300;    // LDR reading in dark room (calibrate this!)
-const int AMBIENT_BRIGHT = 800;  // LDR reading in bright room (calibrate this!)
+const int MIN_BRIGHTNESS = 0;    // Minimum LED brightness (0-255)
+const int MAX_BRIGHTNESS = 255;  // Maximum LED brightness (0-255)
+const int AMBIENT_DARK = 300;    // LDR reading in dark conditions (calibrate this!)
+const int AMBIENT_BRIGHT = 800;  // LDR reading in bright conditions (calibrate this!)
 
 // Variables
 int lightLevel = 0;         // Current LDR reading
-int lampBrightness = 0;     // Current lamp brightness
+int ledBrightness = 0;      // Current LED brightness
 
 void setup() {
   // Initialize serial communication for debugging
   Serial.begin(9600);
   
-  // Set the lamp pin as OUTPUT
-  pinMode(LAMP_PIN, OUTPUT);
+  // Set the LED pin as OUTPUT
+  pinMode(LED_PIN, OUTPUT);
   
-  Serial.println("Arduino Auto-Brightness Desk Lamp");
-  Serial.println("--------------------------------");
+  Serial.println("Arduino Light Sensor Project");
+  Serial.println("----------------------------");
 }
 
 void loop() {
   // Read the value from the LDR
   lightLevel = analogRead(LDR_PIN);
   
-  // Map the ambient light reading to lamp brightness (inverse relationship)
-  // As room gets darker (lower LDR value), lamp gets brighter
-  lampBrightness = map(constrain(lightLevel, AMBIENT_DARK, AMBIENT_BRIGHT), 
-                       AMBIENT_DARK, AMBIENT_BRIGHT, 
-                       MAX_BRIGHTNESS, MIN_BRIGHTNESS);
+  // Map the ambient light reading to LED brightness (inverse relationship)
+  // As room gets darker (lower LDR value), LED gets brighter
+  ledBrightness = map(constrain(lightLevel, AMBIENT_DARK, AMBIENT_BRIGHT), 
+                      AMBIENT_DARK, AMBIENT_BRIGHT, 
+                      MAX_BRIGHTNESS, MIN_BRIGHTNESS);
   
-  // Set the lamp brightness
-  analogWrite(LAMP_PIN, lampBrightness);
+  // Set the LED brightness
+  analogWrite(LED_PIN, ledBrightness);
   
   // Print current readings for debugging
   Serial.print("Ambient Light: ");
   Serial.print(lightLevel);
-  Serial.print("\tLamp Brightness: ");
-  Serial.println(lampBrightness);
+  Serial.print("\tLED Brightness: ");
+  Serial.println(ledBrightness);
   
   // Small delay before next reading
   delay(100);
 }
 ```
 
-### How the Code Works
+## How the Code Works
 
-1. **Reading the Sensor**: The Arduino continuously reads the LDR value, which indicates ambient brightness.
+1. **Reading the Light Sensor**: The Arduino continuously reads the LDR value connected to analog pin A2, which indicates the ambient brightness level.
 
-2. **Mapping Values**: We use Arduino's `map()` function to convert the LDR reading (typically 0-1023) to a PWM value (0-255) for controlling lamp brightness.
+2. **Adjusting LED Brightness**: We use the `map()` function to convert the LDR reading (typically 0-1023) to a PWM value (0-255) that controls the LED brightness.
 
-3. **Inverse Relationship**: When the room is dark (low LDR value), the lamp should be bright, and vice versa.
+3. **Inverse Relationship**: When the environment is dark (low LDR value), the LED will be bright. When the environment is bright, the LED will dim or turn off.
 
-4. **PWM Control**: The `analogWrite()` function sends a PWM signal to control lamp brightness - this creates a smooth dimming effect rather than just on/off.
+4. **PWM Control**: The `analogWrite()` function sends a PWM signal to control LED brightness, creating a smooth dimming effect rather than just on/off.
 
-## Calibrating Your Lamp
+## Calibrating Your Light Sensor
 
 The default values for `AMBIENT_DARK` and `AMBIENT_BRIGHT` might need adjustment based on your specific environment. To calibrate:
 
-1. Upload this simplified calibration sketch:
+1. Upload this simple calibration sketch:
 
 ```cpp
-// Calibration sketch for Auto-Brightness Lamp
+// Calibration sketch for Light Sensor
 
 void setup() {
   Serial.begin(9600);
@@ -125,7 +107,7 @@ void setup() {
 }
 
 void loop() {
-  int lightLevel = analogRead(A0);
+  int lightLevel = analogRead(A2);
   
   Serial.print("Light level: ");
   Serial.println(lightLevel);
@@ -136,117 +118,79 @@ void loop() {
 
 2. Open the Serial Monitor and note the LDR readings:
    - Cover the LDR to simulate darkness and note the value
-   - Place it in normal desk lighting and note the value
+   - Place it in normal room lighting and note the value
    - Place it in bright light or sunlight and note the value
 
 3. Update the main code with your values:
    - Set `AMBIENT_DARK` to your reading in darkness
    - Set `AMBIENT_BRIGHT` to your reading in bright conditions
 
-## 3D Printed Enclosure
-
-To give your project a professional finish, I've designed a sleek, modern lamp enclosure that you can 3D print. The design includes:
-
-- A discrete compartment for the Arduino and wiring
-- Perfect placement for the LDR sensor
-- Diffused light chamber for even illumination
-- Cable management path
-- Stable base design
-
-![3D Printed Lamp Design](/images/blog/lamp-3d-design.webp)
-
-### Download the 3D Files
-
-The download includes:
-- STL files ready for slicing
-- Source files (Fusion 360) if you want to modify the design
-- Assembly instructions
-- Recommended print settings
-
-## Assembly Instructions
-
-1. **Print the enclosure parts** using PLA or PETG (20% infill works well)
-2. **Prepare the circuit** on a mini breadboard
-3. **Mount the Arduino** in the base compartment
-4. **Install the LDR** in the small hole on top
-5. **Thread the LED strip** through the main lamp column
-6. **Connect all wires** according to the circuit diagram
-7. **Snap the pieces together** (no screws needed for basic assembly)
-8. **Upload the code** to your Arduino
-9. **Power up** and enjoy your new smart lamp!
-
-![Lamp Assembly Steps](/images/blog/lamp-assembly.webp)
-
-## Enhancements and Modifications
-
-### Add a Physical Brightness Control
-
-You can add a potentiometer to manually adjust the maximum brightness:
-
-```cpp
-const int POT_PIN = A1;     // Potentiometer for manual brightness control
-
-// In the loop function, add:
-int manualLimit = map(analogRead(POT_PIN), 0, 1023, MIN_BRIGHTNESS, MAX_BRIGHTNESS);
-lampBrightness = constrain(lampBrightness, MIN_BRIGHTNESS, manualLimit);
-```
-
-### Add Sleep Timer Functionality
-
-With the addition of a button, you can implement a sleep timer:
-
-```cpp
-const int BUTTON_PIN = 2;   // Button for sleep timer
-unsigned long sleepTime = 0; // When to turn off the lamp
-
-// In setup:
-pinMode(BUTTON_PIN, INPUT_PULLUP);
-
-// In loop, add:
-if (digitalRead(BUTTON_PIN) == LOW) {
-  sleepTime = millis() + 30*60*1000; // 30 minutes from now
-  Serial.println("Sleep timer activated: 30 minutes");
-  delay(300); // Debounce
-}
-
-// Turn off lamp if sleep timer expired
-if (sleepTime > 0 && millis() > sleepTime) {
-  analogWrite(LAMP_PIN, 0);
-  sleepTime = 0; // Reset timer
-} 
-```
-
 ## Troubleshooting
 
-If your lamp isn't working correctly, check these common issues:
+If your project isn't working correctly, check these common issues:
 
-1. **Lamp doesn't light up**:
-   - Verify all connections
-   - Make sure your 5V lamp works directly with a power source
-   - Check if you need a transistor (for lamps drawing >40mA)
+1. **LED doesn't light up**:
+   - Verify LED orientation (longer leg should connect to the resistor)
+   - Check all wiring connections
+   - Make sure your code has uploaded successfully
 
-2. **Brightness doesn't change**:
+2. **LED brightness doesn't change**:
    - Verify the LDR is connected correctly
    - Check Serial Monitor for LDR readings
    - Try recalibrating with different AMBIENT values
 
-3. **Arduino resets randomly**:
-   - Your lamp may draw too much current - add a transistor
-   - Use an external power supply with sufficient amperage
+3. **Readings are inconsistent**:
+   - Ensure your LDR isn't affected by shadows or direct light from the LED
+   - Try repositioning components on the breadboard
+
+## Project Variations
+
+Once you have the basic circuit working, try these simple modifications:
+
+### 1. Add a Threshold Switch
+
+Instead of gradual dimming, make the LED turn on/off at a specific light threshold:
+
+```cpp
+const int LIGHT_THRESHOLD = 500;  // Adjust this value as needed
+
+void loop() {
+  lightLevel = analogRead(LDR_PIN);
+  
+  // Simple threshold-based control
+  if (lightLevel < LIGHT_THRESHOLD) {
+    digitalWrite(LED_PIN, HIGH);  // Turn LED on in darkness
+  } else {
+    digitalWrite(LED_PIN, LOW);   // Turn LED off in light
+  }
+  
+  Serial.print("Light level: ");
+  Serial.println(lightLevel);
+  delay(100);
+}
+```
+
+### 2. Add a Manual Adjustment
+
+Add a potentiometer to manually set the sensitivity:
+
+```cpp
+const int POT_PIN = A1;  // Connect a potentiometer to A1
+
+// In the loop function:
+int threshold = analogRead(POT_PIN);  // Read the potentiometer
+// Use this threshold value in your light comparison
+```
 
 ## Conclusion
 
-This simple Arduino desk lamp project demonstrates how a few basic components can create a useful, everyday object with "smart" functionality. The auto-brightness feature makes it practical, while the 3D printed enclosure gives it a professional look that wouldn't be out of place in any home or office.
+Congratulations! You've built a simple light-sensing circuit that can automatically control an LED based on ambient light levels. This project demonstrates fundamental Arduino concepts like:
 
-The skills you've learned here—reading analog sensors, controlling brightness with PWM, and mapping input values to output ranges—can be applied to countless other Arduino projects.
+- Reading analog sensors
+- Using PWM to control brightness
+- Mapping input values to output ranges
+- Serial monitoring for debugging
 
-What modifications will you make to your lamp? Share your builds in the comments!
+This basic light sensor project can serve as the foundation for many practical applications, such as automatic night lights, plant growth monitors, or security systems.
 
-![Final Lamp in Action](/images/blog/lamp-in-action.webp)
-
-## Resources and Further Reading
-
-- [Arduino Analog Input Tutorial](https://www.arduino.cc/en/Tutorial/AnalogInput)
-- [PWM with Arduino](https://www.arduino.cc/en/Tutorial/PWM)
-- [3D Printing Basics for Makers](https://www.matterhackers.com/articles/3d-printer-guidebook-how-to-3d-print)
-- [Introduction to Light Sensors](https://learn.sparkfun.com/tutorials/light/all)
+Happy tinkering!
