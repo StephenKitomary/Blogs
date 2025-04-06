@@ -3,7 +3,7 @@ import { USER } from "@/data/user";
 export const SITE_INFO = {
   name: "Notes by teKsafari",
   title: "Notes by teKsafari",
-  url: process.env.APP_URL || "https://chanhdai.com",
+  url: process.env.APP_URL || "https://notes.teksafari.org",
   ogImage: USER.ogImage,
   description: USER.bio,
   keywords: USER.keywords,
@@ -14,7 +14,7 @@ export const META_THEME_COLORS = {
   dark: "#09090b",
 };
 
-export const SOURCE_CODE_GITHUB_URL = "https://github.com/ncdai/chanhdai.com";
+export const SOURCE_CODE_GITHUB_URL = "https://notes.teksafari.org";
 
 export const VIETNAM_HOLIDAYS = [
   "2025-03-08", // Ngày Quốc tế Phụ nữ

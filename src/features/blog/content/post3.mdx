@@ -1,10 +1,299 @@
 ---
-title: My Laptop setup for Programming
+title: My Ultimate macOS Development Environment
 description: 
 image: /images/developer-min.png
 createdAt: 2025-03-02
 updatedAt: 2025-04-02
 ---
 
-## Another post
+Every developer knows that a well-crafted environment can mean the difference between frustrating roadblocks and smooth, efficient coding sessions. After years of trial and error, I've refined my macOS setup into something that genuinely sparks joy every time I open my laptop.
 
+In this guide, I'll walk you through the exact tools I use daily and how they work together to create a development environment that's not just functional but downright delightful to use.
+
+![My macOS Development Setup](/images/developer-min.png)
+
+## Why Customize Your Development Environment?
+
+Before diving into specifics, let's address the elephant in the room: Why bother?
+
+The default macOS terminal and tooling are... functional. But they're like cooking with dull knives and a temperamental stove. You *can* make dinner, but it's not going to be a pleasant experience.
+
+A thoughtfully customized environment gives you:
+- **Speed**: Autocompletions, shortcuts, and optimized workflows save countless hours
+- **Clarity**: Syntax highlighting and informative prompts reduce cognitive load
+- **Joy**: Let's be honest—staring at a beautiful terminal is simply more pleasant than a bland one
+
+So with that said, let's build an environment worth spending those long coding hours in!
+
+## 1. Homebrew: The Foundation of macOS Development
+
+Homebrew is the missing package manager for macOS and the cornerstone of any serious development setup. Without it, you're stuck manually downloading and managing software—a recipe for dependency nightmares.
+
+### Installation
+
+Open Terminal and run:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+After installation, you'll need to add Homebrew to your PATH. The installer should provide specific instructions for your system, but it typically involves adding this to your shell profile:
+
+```bash
+export PATH=$PATH:/opt/homebrew/bin
+```
+
+### What Makes Homebrew Essential
+
+Homebrew transforms software installation from a tedious hunt for download links and installers into simple commands:
+
+Example to install python on your machine, you can simply do so by typing the following:
+
+```bash
+# Install a CLI tool
+brew install python
+
+```
+
+It also handles dependencies gracefully, keeps your software updated, and makes uninstalling clean and easy.
+
+> **Pro Tip**: Run `brew doctor` periodically to ensure your Homebrew installation remains healthy.
+
+## 2. WezTerm: My perfect Termnal emulator
+
+The default Terminal.app works, but it severely limits what you can do. WezTerm is a blazingly fast, feature-rich terminal emulator that's transformed my command-line experience.
+
+### Why WezTerm?
+
+While iTerm2 is popular in the macOS community, (Infact I have used it for a while before switching to WezTerm)., I've found WezTerm offers several advantages:
+
+- **Cross-platform**: Works identically on macOS, Linux, and Windows
+- **GPU-accelerated**: Renders text with your GPU for buttery-smooth scrolling
+- **Lua configuration**: Infinitely customizable without diving into obscure preferences
+- **Multiplexer built-in**: Handles tabs, panes, and sessions similar to tmux, but integrated
+
+### Installation
+
+```bash
+brew install --cask wezterm
+```
+
+### My wezterm configuration and shorcut keys
+
+Create a file at `~/.wezterm.lua`:
+
+```lua
+local wezterm = require 'wezterm'
+
+return {
+  font = wezterm.font('JetBrains Mono'),
+  font_size = 14.0,
+  color_scheme = "Catppuccin Mocha",
+  window_background_opacity = 0.95,
+  enable_tab_bar = true,
+  use_fancy_tab_bar = false,
+  window_padding = {
+    left = 10,
+    right = 10,
+    top = 10,
+    bottom = 10,
+  },
+}
+```
+
+This gives you a clean, minimalist terminal with excellent font rendering and a pleasant color scheme.
+
+## 3. Oh My Zsh with Powerlevel10k: Terminal on Steroids
+
+The macOS default shell environment is barebones. Oh My Zsh transforms it with themes, plugins, and countless quality-of-life improvements.
+
+### Installing Oh My Zsh
+
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+### Powerlevel10k: The perfect theme
+
+![Powerlevel10k Terminal Theme](/images/powerlevel10k.png)
+
+Powerlevel10k isn't just about looks—it provides context-aware information right in your prompt, showing git status, execution time, and more exactly when you need it.
+
+```bash
+git clone https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+```
+
+Edit your `~/.zshrc` file and set:
+
+```bash
+ZSH_THEME="powerlevel10k/powerlevel10k"
+```
+
+After saving, restart your terminal or run:
+
+```bash
+source ~/.zshrc
+```
+
+You'll be greeted with a configuration wizard. The beauty of Powerlevel10k is how it walks you through personalizing your terminal experience with simple yes/no questions.
+
+### Configuration Wizard
+
+If the wizard doesn't start automatically, launch it with:
+
+```bash
+p10k configure
+```
+
+Follow the prompts to customize your terminal, from showing command execution time to git status indicators. Take your time here—these small UI decisions dramatically impact your daily workflow.
+
+### Essential Zsh Plugins
+
+A terminal without plugins is like a browser without extensions. Here are the must-haves:
+
+#### Autosuggestions
+
+Suggests commands based on your history as you type:
+
+```bash
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+```
+
+#### Syntax Highlighting
+
+Makes command-line syntax easier to read (and spot errors):
+
+```bash
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+```
+
+#### Enabling the Plugins
+
+Edit your `~/.zshrc` file and update the plugins line:
+
+```bash
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting web-search)
+```
+
+Then load these changes:
+
+```bash
+source ~/.zshrc
+```
+
+> **Pro Tip**: The `web-search` plugin lets you search Google directly from your terminal with commands like `google "how to center a div"`.
+
+## 4. Helix: A Modern Take on Terminal Editors
+I switched to helix about a month ago from being a VS code user (at the moment of writing this article), and honestly its been a rewarding experience.Clean interface that lets you focus on the Code, lack on AI aiding tools that Iam trying to avoid heavily relying on them. Switching to Helix was heavily insipired by my professor who is a heavy vim user.
+
+While many developers swear by Vim or Neovim, I've found Helix to be a refreshing alternative. It maintains the modal editing philosophy but comes pre-configured with sensible defaults.
+![Helix](images/helix.png)
+
+### Why Helix over Vim/Neovim?
+
+- **Zero configuration needed**: Works beautifully out of the box
+- **Modern features included**: LSP support, tree-sitter, and multi-cursor editing without plugins
+- **Intuitive keybindings**: Commands follow patterns that make more sense to modern users
+- **Blazing fast**: Even with large files, Helix maintains performance
+
+### Installation
+
+While you can install via Homebrew, I recommend building from source for the latest features:
+
+```bash
+# Install Rust if you haven't already
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# Clone and build Helix
+git clone https://github.com/helix-editor/helix
+cd helix
+cargo install --path helix-term
+```
+
+For the official build instructions, visit the [Helix documentation](https://docs.helix-editor.com/building-from-source.html).
+
+### Basic Usage
+
+Helix shares some concepts with Vim but simplifies many operations:
+
+- `i` to enter insert mode
+- `Escape` to return to normal mode
+- `:w` to save, `:q` to quit
+- `Space` brings up a command palette (similar to VS Code)
+
+One of the best features is the built-in tutorial. Just run:
+
+```bash
+hx --tutor
+```
+
+## Putting It All Together
+
+This combination of tools creates a cohesive environment that handles everything from package management to editing to terminal multiplexing with elegance and speed.
+
+Here's what my typical workflow looks like:
+
+1. Open WezTerm, which loads my Zsh configuration and Powerlevel10k theme
+2. Use Homebrew to install or update any required dependencies
+3. Split the terminal into multiple panes—one running a local server, one for git operations, and one with Helix for editing
+
+![My Terminal Workflow](/images/blog/terminal-workflow.webp)
+
+## Beyond the Basics: Advanced Customizations
+
+Once you're comfortable with the core setup, consider these advanced enhancements:
+
+### Custom Aliases
+
+Add these to your `~/.zshrc` for massive time savings:
+
+```bash
+# Navigation shortcuts
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ls='ls -GFh'
+alias ll='ls -la'
+
+# Git shortcuts
+alias gs='git status'
+alias gc='git commit'
+alias gp='git push'
+
+# Project shortcuts
+alias work='cd ~/Documents/Projects'
+```
+
+### Function Key Shortcuts
+
+I've mapped common actions to function keys in WezTerm:
+
+```lua
+-- Add to your ~/.wezterm.lua
+local act = wezterm.action
+return {
+  -- Previous configuration...
+  keys = {
+    {key="F1", mods="SHIFT", action=act.SplitHorizontal{domain="CurrentPaneDomain"}},
+    {key="F2", mods="SHIFT", action=act.SplitVertical{domain="CurrentPaneDomain"}},
+    {key="F3", mods="SHIFT", action=act.SpawnTab("CurrentPaneDomain")},
+  },
+}
+```
+
+## Conclusion: A Living Environment
+
+Your development environment should evolve with you. I revisit and refine mine quarterly, adding tools that enhance productivity and removing ones that no longer serve my workflow.
+
+The beauty of this setup is its modularity—each component (Homebrew, WezTerm, Oh My Zsh, and Helix) is excellent on its own but becomes transformative when combined.
+
+What's your favorite terminal customization? Have you found tools that make your development experience more enjoyable? Let me know in the comments!
+
+---
+
+## Resources and Further Reading
+
+- [Homebrew Documentation](https://docs.brew.sh/)
+- [WezTerm Configuration Guide](https://wezfurlong.org/wezterm/config/files.html)
+- [Powerlevel10k Features](https://github.com/romkatv/powerlevel10k#features)
+- [Helix Editor Documentation](https://docs.helix-editor.com/)
+- [Oh My Zsh Cheatsheet](https://github.com/ohmyzsh/ohmyzsh/wiki/Cheatsheet)
