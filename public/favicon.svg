@@ -1,6 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="576" height="576"><svg width="576" height="576" viewBox="0 0 576 576" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="576" height="576" fill="black"></rect>
-<path d="M312 192L444.94 239.348C491.687 254.864 491.687 321.137 444.94 336.653L312 384V352.013L435.483 308.034C454.732 301.645 454.732 274.356 435.483 267.967L331.553 230.248L264 384L131.06 336.653C84.3132 321.137 84.3133 254.864 131.06 239.348L264 192V223.987L140.517 267.967C121.268 274.356 121.268 301.645 140.517 308.034L244.447 345.752L312 192Z" fill="white"></path>
-</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
-@media (prefers-color-scheme: dark) { :root { filter: none; } }
-</style></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #231f20;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #fff;
+        stroke-linecap: round;
+        stroke-miterlimit: 10;
+        stroke-width: 4px;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer_1">
+    <rect class="cls-1" width="192" height="192" rx="19.37" ry="19.37"/>
+    <g>
+      <polyline class="cls-2" points="87.77 117.99 148.08 131.72 160.11 31.82 16.83 99.61 64.49 110.82"/>
+      <polyline class="cls-2" points="87.77 117.99 160.11 31.82 64.49 110.82 83.01 163.39 107.22 122.42"/>
+      <line class="cls-2" x1="87.77" y1="117.99" x2="83.01" y2="163.39"/>
+    </g>
+  </g>
+</svg>

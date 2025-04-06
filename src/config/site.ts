@@ -4,7 +4,7 @@ export const SITE_INFO = {
   name: "Notes by teKsafari",
   title: "Notes by teKsafari",
   url: process.env.APP_URL || "https://notes.teksafari.org",
-  ogImage: USER.ogImage,
+  
   description: USER.bio,
   keywords: USER.keywords,
 };

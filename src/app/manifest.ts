@@ -9,9 +9,9 @@ export default function manifest(): MetadataRoute.Manifest {
     description: SITE_INFO.description,
     icons: [
       {
-        src: "/icon-vector.svg",
-        type: "image/svg+xml",
-        sizes: "any",
+        src: "/Sitelogo.webp",
+        type: "image/webp",
+        sizes: "600x600",
         purpose: "any",
       },
       {
@@ -27,10 +27,10 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: "any",
       },
       {
-        src: "/maskable-icon.png",
-        type: "image/png",
-        sizes: "512x512",
-        purpose: "maskable",
+        src: "/Sitelogo.webp",
+        type: "image/webp",
+        sizes: "600x600",
+        purpose: "any",
       },
     ],
     id: "/?utm_source=pwa",
