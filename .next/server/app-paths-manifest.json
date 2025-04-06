@@ -1,6 +1,13 @@
 {
-  "/(app)/[slug]/page": "app/(app)/[slug]/page.js",
-  "/(home)/page": "app/(home)/page.js",
   "/_not-found/page": "app/_not-found/page.js",
-  "/manifest.webmanifest/route": "app/manifest.webmanifest/route.js"
+  "/og/domain/route": "app/og/domain/route.js",
+  "/rss/route": "app/rss/route.js",
+  "/vcard/route": "app/vcard/route.js",
+  "/robots.txt/route": "app/robots.txt/route.js",
+  "/manifest.webmanifest/route": "app/manifest.webmanifest/route.js",
+  "/sitemap.xml/route": "app/sitemap.xml/route.js",
+  "/og/simple/route": "app/og/simple/route.js",
+  "/ui/page": "app/ui/page.js",
+  "/(app)/[slug]/page": "app/(app)/[slug]/page.js",
+  "/(home)/page": "app/(home)/page.js"
 }
