@@ -1,6 +1,6 @@
 export const USER = {
-  firstName: "Chánh Đại",
-  lastName: "Nguyễn",
+  firstName: "Teksafari",
+  lastName: "Org",
   displayName: "Notes by",
   username: "ncdai",
   gender: "male",
@@ -46,7 +46,7 @@ With 5+ years of experience, I specialize in building high-quality web and mobil
 One of my key projects, [ZaDark](https://zadark.com), enhances the Zalo experience on PC and Web, surpassing 80,000 downloads on [SourceForge](https://sourceforge.net/projects/zadark) and 10,000 active users on the [Chrome Web Store](https://chromewebstore.google.com/detail/llfhpkkeljlgnjgkholeppfnepmjppob) since 2022.\n
 Let's connect and collaborate!
   `,
-  avatar: "/images/chanhdai-avatar-ghibli.jpeg",
+  avatar: "/images/Notes-min.png",
   ogImage: "/images/Notes-min.png",
   keywords:
     "ncdai, nguyenchanhdai, nguyen chanh dai, chanhdai, chanh dai, iamncdai, quaric, zadark, nguyễn chánh đại, chánh đại",
