@@ -1,0 +1,413 @@
+---
+title: My Dev Setup
+description: 
+image: /images/black-laptop.jpg
+createdAt: 2025-04-04
+updatedAt: 2025-04-06
+---
+
+Every developer knows that a well-crafted environment can mean the difference between frustrating roadblocks and smooth, efficient coding sessions. After years of trial and error, I've refined my macOS setup into something that genuinely sparks joy every time I open my laptop.
+
+In this guide, I'll walk you through the exact tools I use daily and how they work together to create a development environment that's not just functional but downright delightful to use.
+
+![My macOS Development Setup](/images/mysetupbw.JPG)
+## Why Customize Your Development Environment?
+
+Before diving into specifics, let's address the elephant in the room: Why bother?
+
+The default macOS terminal and tooling are... functional. But they're like cooking with dull knives and a temperamental stove. You *can* make dinner, but it's not going to be a pleasant experience.
+
+A thoughtfully customized environment gives you:
+- **Speed**: Autocompletions, shortcuts, and optimized workflows save countless hours
+- **Clarity**: Syntax highlighting and informative prompts reduce cognitive load
+- **Joy**: Let's be honest—staring at a beautiful terminal is simply more pleasant than a bland one
+
+So with that said, let's build an environment worth spending those long coding hours in!
+
+## 1. Homebrew: The Foundation of macOS Development
+
+Homebrew is the missing package manager for macOS and the cornerstone of any serious development setup. Without it, you're stuck manually downloading and managing software—a recipe for dependency nightmares.
+
+### Installation
+
+Open Terminal and run:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+After installation, you'll need to add Homebrew to your PATH. The installer should provide specific instructions for your system, but it typically involves adding this to your shell profile:
+
+```bash
+export PATH=$PATH:/opt/homebrew/bin
+```
+
+### What Makes Homebrew Essential
+
+Homebrew transforms software installation from a tedious hunt for download links and installers into simple commands:
+
+Example to install python on your machine, you can simply do so by typing the following:
+
+```bash
+# Install a CLI tool
+brew install python
+
+```
+
+It also handles dependencies gracefully, keeps your software updated, and makes uninstalling clean and easy.
+
+> **Pro Tip**: Run `brew doctor` periodically to ensure your Homebrew installation remains healthy.
+
+## 2. WezTerm: My perfect Termnal emulator
+
+The default Terminal.app works, but it severely limits what you can do. WezTerm is a blazingly fast, feature-rich terminal emulator that's transformed my command-line experience.
+
+### Why WezTerm?
+
+While iTerm2 is popular in the macOS community, (Infact I have used it for a while before switching to WezTerm)., I've found WezTerm offers several advantages:
+
+- **Cross-platform**: Works identically on macOS, Linux, and Windows
+- **GPU-accelerated**: Renders text with your GPU for buttery-smooth scrolling
+- **Lua configuration**: Infinitely customizable without diving into obscure preferences
+- **Multiplexer built-in**: Handles tabs, panes, and sessions similar to tmux, but integrated
+
+### Installation
+
+```bash
+brew install --cask wezterm
+```
+
+### My wezterm configuration and shorcut keys
+
+Create a file at `~/.wezterm.lua`:
+
+```lua
+-- Leader Key:
+-- The leader key is set to ALT + q, with a timeout of 2000 milliseconds (2 seconds).
+-- To execute any keybinding, press the leader key (ALT + q) first, then the corresponding key.
+
+-- Keybindings:
+-- 1. Tab Management:
+--    - LEADER + c: Create a new tab in the current pane's domain.
+--    - LEADER + x: Close the current pane (with confirmation).
+--    - LEADER + b: Switch to the previous tab.
+--    - LEADER + n: Switch to the next tab.
+--    - LEADER + <number>: Switch to a specific tab (0–9).
+
+-- 2. Pane Splitting:
+--    - LEADER + |: Split the current pane horizontally into two panes.
+--    - LEADER + -: Split the current pane vertically into two panes.
+
+-- 3. Pane Navigation:
+--    - LEADER + h: Move to the pane on the left.
+--    - LEADER + j: Move to the pane below.
+--    - LEADER + k: Move to the pane above.
+--    - LEADER + l: Move to the pane on the right.
+
+-- 4. Pane Resizing:
+--    - LEADER + LeftArrow: Increase the pane size to the left by 5 units.
+--    - LEADER + RightArrow: Increase the pane size to the right by 5 units.
+--    - LEADER + DownArrow: Increase the pane size downward by 5 units.
+--    - LEADER + UpArrow: Increase the pane size upward by 5 units.
+
+-- 5. Status Line:
+--    - The status line indicates when the leader key is active, displaying an ocean wave emoji (🌊).
+
+-- Miscellaneous Configurations:
+-- - Tabs are shown even if there's only one tab.
+-- - The tab bar is located at the bottom of the terminal window.
+-- - Tab and split indices are zero-based.
+
+-- Pull in the wezterm API
+local wezterm = require "wezterm"
+
+-- This table will hold the configuration.
+local config = {}
+
+-- In newer versions of wezterm, use the config_builder which will
+-- help provide clearer error messages
+if wezterm.config_builder then
+    config = wezterm.config_builder()
+end
+
+-- For example, changing the color scheme:
+config.default_cursor_style = 'BlinkingBar'
+config.color_scheme = "Catppuccin Macchiato"
+config.font =
+    wezterm.font("JetBrains Mono NL")
+config.font_size = 9
+
+config.window_decorations = "RESIZE"
+
+-- tmux
+config.leader = { key = "q", mods = "ALT", timeout_milliseconds = 2000 }
+config.keys = {
+    {
+        mods = "LEADER",
+        key = "c",
+        action = wezterm.action.SpawnTab "CurrentPaneDomain",
+    },
+    {
+        mods = "LEADER",
+        key = "x",
+        action = wezterm.action.CloseCurrentPane { confirm = true }
+    },
+    {
+        mods = "LEADER",
+        key = "b",
+        action = wezterm.action.ActivateTabRelative(-1)
+    },
+    {
+        mods = "LEADER",
+        key = "n",
+        action = wezterm.action.ActivateTabRelative(1)
+    },
+    {
+        mods = "LEADER",
+        key = "=",
+        action = wezterm.action.SplitHorizontal { domain = "CurrentPaneDomain" }
+    },
+    {
+        mods = "LEADER",
+        key = "-",
+        action = wezterm.action.SplitVertical { domain = "CurrentPaneDomain" }
+    },
+    {
+        mods = "LEADER",
+        key = "j",
+        action = wezterm.action.ActivatePaneDirection "Left"
+    },
+    {
+        mods = "LEADER",
+        key = "k",
+        action = wezterm.action.ActivatePaneDirection "Down"
+    },
+    {
+        mods = "LEADER",
+        key = "i",
+        action = wezterm.action.ActivatePaneDirection "Up"
+    },
+    {
+        mods = "LEADER",
+        key = "l",
+        action = wezterm.action.ActivatePaneDirection "Right"
+    },
+    {
+        mods = "LEADER",
+        key = "LeftArrow",
+        action = wezterm.action.AdjustPaneSize { "Left", 5 }
+    },
+    {
+        mods = "LEADER",
+        key = "RightArrow",
+        action = wezterm.action.AdjustPaneSize { "Right", 5 }
+    },
+    {
+        mods = "LEADER",
+        key = "DownArrow",
+        action = wezterm.action.AdjustPaneSize { "Down", 5 }
+    },
+    {
+        mods = "LEADER",
+        key = "UpArrow",
+        action = wezterm.action.AdjustPaneSize { "Up", 5 }
+    },
+    {
+        mods = "LEADER",
+        key = "f",
+        action = wezterm.action.ToggleFullScreen,
+    },
+}
+
+for i = 0, 9 do
+    -- leader + number to activate that tab
+    table.insert(config.keys, {
+        key = tostring(i),
+        mods = "LEADER",
+        action = wezterm.action.ActivateTab(i),
+    })
+end
+
+-- tab bar
+config.hide_tab_bar_if_only_one_tab = false
+config.tab_bar_at_bottom = true
+config.use_fancy_tab_bar = false
+config.tab_and_split_indices_are_zero_based = true
+
+-- tmux status
+wezterm.on("update-right-status", function(window, _)
+    local SOLID_LEFT_ARROW = ""
+    local ARROW_FOREGROUND = { Foreground = { Color = "#c6a0f6" } }
+    local prefix = ""
+
+    if window:leader_is_active() then
+        prefix = " " .. utf8.char(0x1f30a) -- ocean wave
+        SOLID_LEFT_ARROW = utf8.char(0xe0b2)
+    end
+
+    if window:active_tab():tab_id() ~= 0 then
+        ARROW_FOREGROUND = { Foreground = { Color = "#1e2030" } }
+    end -- arrow color based on if tab is first pane
+
+    window:set_left_status(wezterm.format {
+        { Background = { Color = "#b7bdf8" } },
+        { Text = prefix },
+        ARROW_FOREGROUND,
+        { Text = SOLID_LEFT_ARROW }
+    })
+end)
+config.default_prog = { "bash", "-l" }
+config.default_cwd = "/mnt/c/Users/skito"
+-- and finally, return the configuration to wezterm
+return config
+
+```
+
+This gives you a clean, minimalist terminal with excellent font rendering and a pleasant color scheme.
+
+## 3. Oh My Zsh with Powerlevel10k: Terminal on Steroids
+
+The macOS default shell environment is barebones. Oh My Zsh transforms it with themes, plugins, and countless quality-of-life improvements.
+
+### Installing Oh My Zsh
+
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+### Powerlevel10k: The perfect theme
+
+![Powerlevel10k Terminal Theme](/images/powerlevel10k.png)
+
+Powerlevel10k isn't just about looks—it provides context-aware information right in your prompt, showing git status, execution time, and more exactly when you need it.
+
+```bash
+git clone https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+```
+
+Edit your `~/.zshrc` file and set:
+
+```bash
+ZSH_THEME="powerlevel10k/powerlevel10k"
+```
+
+After saving, restart your terminal or run:
+
+```bash
+source ~/.zshrc
+```
+
+You'll be greeted with a configuration wizard. The beauty of Powerlevel10k is how it walks you through personalizing your terminal experience with simple yes/no questions.
+
+### Configuration Wizard
+
+If the wizard doesn't start automatically, launch it with:
+
+```bash
+p10k configure
+```
+
+Follow the prompts to customize your terminal, from showing command execution time to git status indicators. Take your time here—these small UI decisions dramatically impact your daily workflow.
+
+### Essential Zsh Plugins
+
+A terminal without plugins is like a browser without extensions. Here are the must-haves:
+
+#### Autosuggestions
+
+Suggests commands based on your history as you type:
+
+```bash
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+```
+
+#### Syntax Highlighting
+
+Makes command-line syntax easier to read (and spot errors):
+
+```bash
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+```
+
+#### Enabling the Plugins
+
+Edit your `~/.zshrc` file and update the plugins line:
+
+```bash
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting web-search)
+```
+
+Then load these changes:
+
+```bash
+source ~/.zshrc
+```
+
+> **Pro Tip**: The `web-search` plugin lets you search Google directly from your terminal with commands like `google "how to center a div"`.
+
+## 4. Helix: A Modern Take on Terminal Editors
+I switched to helix about a month ago from being a VS code user (at the moment of writing this article), and honestly its been a rewarding experience.Clean interface that lets you focus on the Code, lack on AI aiding tools that Iam trying to avoid heavily relying on them. Switching to Helix was heavily insipired by my professor who is a heavy vim user.
+
+While many developers swear by Vim or Neovim, I've found Helix to be a refreshing alternative. It maintains the modal editing philosophy but comes pre-configured with sensible defaults.
+![Helix](images/helix.png)
+
+### Why Helix over Vim/Neovim?
+
+- **Zero configuration needed**: Works beautifully out of the box
+- **Modern features included**: LSP support, tree-sitter, and multi-cursor editing without plugins
+- **Intuitive keybindings**: Commands follow patterns that make more sense to modern users
+- **Blazing fast**: Even with large files, Helix maintains performance
+
+### Installation
+
+While you can install via Homebrew, I recommend building from source for the latest features:
+
+```bash
+# Install Rust if you haven't already
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# Clone and build Helix
+git clone https://github.com/helix-editor/helix
+cd helix
+cargo install --path helix-term
+```
+
+For the official build instructions, visit the [Helix documentation](https://docs.helix-editor.com/building-from-source.html).
+
+### Basic Usage
+
+Helix shares some concepts with Vim but simplifies many operations:
+
+- `i` to enter insert mode
+- `Escape` to return to normal mode
+- `:w` to save, `:q` to quit
+- `Space` brings up a command palette (similar to VS Code)
+
+One of the best features is the built-in tutorial. Just run:
+
+```bash
+hx --tutor
+```
+
+## Putting It All Together
+
+This combination of tools creates a cohesive environment that handles everything from package management to editing to terminal multiplexing with elegance and speed.
+
+Here's what my typical workflow looks like:
+
+1. Open WezTerm, which loads my Zsh configuration and Powerlevel10k theme
+2. Use Homebrew to install or update any required dependencies
+3. Split the terminal into multiple panes—one running a local server, one for git operations, and one with Helix for editing
+
+
+
+
+---
+
+## Resources and Further Reading
+
+- [Homebrew Documentation](https://docs.brew.sh/)
+- [WezTerm Configuration Guide](https://wezfurlong.org/wezterm/config/files.html)
+- [Powerlevel10k Features](https://github.com/romkatv/powerlevel10k#features)
+- [Helix Editor Documentation](https://docs.helix-editor.com/)
+- [Oh My Zsh Cheatsheet](https://github.com/ohmyzsh/ohmyzsh/wiki/Cheatsheet)
